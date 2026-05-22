@@ -8,7 +8,7 @@ type StageEmbedFrameProps = {
   className?: string
 }
 
-/** iframe points at steps-project-slot; src updates navigate #/1 … #/6 without remounting. */
+/** iframe points at steps-project-slot; src updates navigate #1 … #3 without remounting. */
 export function StageEmbedFrame({ src, title, className }: StageEmbedFrameProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null)
 

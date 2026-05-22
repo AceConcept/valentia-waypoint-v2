@@ -1,19 +1,16 @@
-/** Generic numbered step ids (1–6). */
-export type FlowStepId = '1' | '2' | '3' | '4' | '5' | '6'
+/** Generic numbered step ids (1–3). */
+export type FlowStepId = '1' | '2' | '3'
 
-export const FLOW_STEP_IDS = ['1', '2', '3', '4', '5', '6'] as const satisfies readonly FlowStepId[]
+export const FLOW_STEP_IDS = ['1', '2', '3'] as const satisfies readonly FlowStepId[]
 
-/** Must match steps-project-slot hash routes (`#1` … `#6`, not `#/1`). */
+/** Must match steps-project-slot hash routes (`#1` … `#3`, not `#/1`). */
 export const POLAR_SYS_HASH: Record<FlowStepId, string> = {
   '1': '#1',
   '2': '#2',
   '3': '#3',
-  '4': '#4',
-  '5': '#5',
-  '6': '#6',
 }
 
-/** iframe target — https://steps-project-slot.vercel.app (#1 … #6) */
+/** iframe target — https://steps-project-slot.vercel.app (#1 … #3) */
 export const STAGE_EMBED_ORIGIN = 'https://steps-project-slot.vercel.app'
 
 export function getStageEmbedOrigin(): string {

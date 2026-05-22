@@ -17,7 +17,7 @@ export {
   stageEmbedUrlForStep,
 } from './stageEmbedConfig'
 
-/** Map `#1` … `#6` (or legacy `#/N`) to step ids. */
+/** Map `#1` … `#3` (or legacy `#/N`) to step ids. */
 export function polarFlowIdFromHash(hash: string): FlowStepId {
   const segment = String(hash || '')
     .replace(/^#/, '')

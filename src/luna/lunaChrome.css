@@ -122,23 +122,12 @@
   min-width: 0;
 }
 
-/* Top-row slots: steps 1–3 + step-4 dropdown shell (120rem ÷ 4) */
-.luna-canvas-row > .luna-absolute-pad .navbar-steps > .step-tab,
-.luna-canvas-row > .luna-absolute-pad .navbar-steps > .step-tab-dropdown {
-  flex: 0 0 30rem;
-  width: 30rem;
+/* Top-row slots: three steps (120rem ÷ 3) */
+.luna-canvas-row > .luna-absolute-pad .navbar-steps > .step-tab {
+  flex: 0 0 40rem;
+  width: 40rem;
   height: 100%;
   box-sizing: border-box;
-}
-
-.luna-canvas-row > .luna-absolute-pad .navbar-steps > .step-tab-dropdown {
-  position: relative;
-  z-index: 1;
-  border-right: 0.0625rem solid rgba(228, 228, 228, 0.8); /* #e4e4e4 @ 80% */
-}
-
-.luna-canvas-row > .luna-absolute-pad .navbar-steps > .step-tab-dropdown.is-open {
-  z-index: 2;
 }
 
 .luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab {
@@ -152,42 +141,11 @@
   appearance: none;
 }
 
-.luna-canvas-row > .luna-absolute-pad .navbar-steps > .step-tab-dropdown > .step-tab-dropdown__trigger {
-  width: 100%;
-  height: 100%;
-}
-
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab-dropdown__panel {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background: #fff;
-  box-shadow: 0 0 1.875rem rgba(0, 0, 0, 0.1);
-}
-
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab-dropdown__panel > .step-tab {
-  flex: 0 0 auto;
-  width: 100%;
-  height: var(--luna-horizontal-pad-top);
-  border-left: 0;
-  border-top: 0.0625rem solid rgba(228, 228, 228, 0.8);
-}
-
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab-dropdown__panel > .step-tab:first-child {
-  border-top: 0;
-}
-
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab-dropdown.is-open > .step-tab-dropdown__trigger,
 .luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab:hover {
   background: rgba(0, 0, 0, 0.04);
 }
 
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab[aria-current='step'],
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab-dropdown__trigger.is-active {
+.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab[aria-current='step'] {
   background: rgba(0, 0, 0, 0.06);
 }
 
@@ -244,16 +202,14 @@
 
 .luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab:hover .step-label-inner,
 .luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab:focus-visible .step-label-inner,
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab[aria-current='step'] .step-label-inner,
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab-dropdown__trigger.is-active .step-label-inner {
+.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab[aria-current='step'] .step-label-inner {
   gap: 1.5rem; /* 24px — title shifts as diamond enters */
   color: #000;
 }
 
 .luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab:hover .step-diamond,
 .luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab:focus-visible .step-diamond,
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab[aria-current='step'] .step-diamond,
-.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab-dropdown__trigger.is-active .step-diamond {
+.luna-canvas-row > .luna-absolute-pad .navbar-steps .step-tab[aria-current='step'] .step-diamond {
   width: 1rem;
   min-width: 1rem;
   opacity: 1;
@@ -462,6 +418,7 @@
   line-height: 2.875rem; /* match button height for vertical centering */
   letter-spacing: 0.06em; /* 4% */
   text-transform: uppercase;
+  text-decoration: none;
   color: #fff;
   cursor: pointer;
 }

@@ -36,7 +36,7 @@ function App() {
       if (event.origin !== embedOrigin) return
       if (event.data?.type !== STAGE_EMBED_STEP_CHANGED) return
       const n = Number(event.data.step)
-      if (!Number.isFinite(n) || n < 1 || n > 6) return
+      if (!Number.isFinite(n) || n < 1 || n > FLOW_STEP_IDS.length) return
       const id = String(n) as FlowStepId
       if (!FLOW_STEP_IDS.includes(id)) return
       syncStepFromEmbed(id)

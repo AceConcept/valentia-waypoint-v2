@@ -186,12 +186,12 @@ export function LunaChrome({
                   </motion.div>
                 </AnimatePresence>
                 <div className="content-buttons">
-                  <button
-                    type="button"
+                  <a
                     className="content-button content-button--case-study"
+                    href="https://www.atencium-ui.com/design-gallery/valentia"
                   >
                     Case study
-                  </button>
+                  </a>
                   <button
                     type="button"
                     className="content-button content-button--fullscreen"
