@@ -46,6 +46,7 @@ export default function WaypointStepsScreen() {
             >
               <StageEmbedFrame
                 className="stepscreen-embed"
+                stepKey={step.id}
                 src={embedSrc}
                 title="Atencium steps"
               />

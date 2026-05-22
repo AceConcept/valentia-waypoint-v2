@@ -12,6 +12,7 @@ import {
 } from './store/flowStore'
 import {
   requestStageEmbedStep,
+  shouldIgnoreEmbedStepSync,
   STAGE_EMBED_STEP_CHANGED,
 } from './store/stageEmbedBridge'
 import { getStageEmbedOrigin } from './store/stageEmbedConfig'
@@ -34,6 +35,7 @@ function App() {
     const embedOrigin = getStageEmbedOrigin()
     const onMessage = (event: MessageEvent) => {
       if (event.origin !== embedOrigin) return
+      if (shouldIgnoreEmbedStepSync()) return
       if (event.data?.type !== STAGE_EMBED_STEP_CHANGED) return
       const n = Number(event.data.step)
       if (!Number.isFinite(n) || n < 1 || n > FLOW_STEP_IDS.length) return
@@ -46,7 +48,7 @@ function App() {
   }, [syncStepFromEmbed])
 
   useEffect(() => {
-    const poll = window.setInterval(() => requestStageEmbedStep(), 400)
+    const poll = window.setInterval(() => requestStageEmbedStep(), 800)
     return () => window.clearInterval(poll)
   }, [])
 

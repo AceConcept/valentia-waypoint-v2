@@ -252,6 +252,7 @@ export function LunaChrome({
                   >
                     <StageEmbedFrame
                       className="luna-fullscreen-overlay__embed"
+                      stepKey={step.id}
                       src={fullscreenEmbedSrc}
                       title="Full screen steps"
                     />

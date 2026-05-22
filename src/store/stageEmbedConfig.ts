@@ -3,15 +3,22 @@ export type FlowStepId = '1' | '2' | '3'
 
 export const FLOW_STEP_IDS = ['1', '2', '3'] as const satisfies readonly FlowStepId[]
 
-/** Must match steps-project-slot hash routes (`#1` … `#3`, not `#/1`). */
+/** Shell URL hash only (`#1` … `#3`) — not passed to the iframe. */
 export const POLAR_SYS_HASH: Record<FlowStepId, string> = {
   '1': '#1',
   '2': '#2',
   '3': '#3',
 }
 
-/** iframe target — https://steps-project-slot.vercel.app (#1 … #3) */
-export const STAGE_EMBED_ORIGIN = 'https://steps-project-slot.vercel.app'
+/** iframe path per step (appended to embed origin). */
+export const STAGE_EMBED_PATHS: Record<FlowStepId, string> = {
+  '1': '/',
+  '2': '/?chart=BTCUSDT&compare=SOLUSDT',
+  '3': '/insight/btcusdt-solusdt',
+}
+
+/** iframe target — https://valentia.guildconcept.workers.dev */
+export const STAGE_EMBED_ORIGIN = 'https://valentia.guildconcept.workers.dev'
 
 export function getStageEmbedOrigin(): string {
   const envOrigin = import.meta.env.VITE_STAGE_EMBED_ORIGIN as string | undefined
@@ -19,11 +26,8 @@ export function getStageEmbedOrigin(): string {
   return STAGE_EMBED_ORIGIN
 }
 
-export function stageEmbedUrl(polarHash: string): string {
-  const base = getStageEmbedOrigin().replace(/\/$/, '')
-  return `${base}${polarHash}`
-}
-
 export function stageEmbedUrlForStep(id: FlowStepId): string {
-  return stageEmbedUrl(POLAR_SYS_HASH[id])
+  const base = getStageEmbedOrigin().replace(/\/$/, '')
+  const path = STAGE_EMBED_PATHS[id]
+  return `${base}${path}`
 }

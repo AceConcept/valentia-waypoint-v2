@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { STEP_DESCRIPTIONS, STEP_TITLES } from '../stepDescriptions'
-import { postStageEmbedStep } from './stageEmbedBridge'
+import { markShellEmbedNavigation, postStageEmbedStep } from './stageEmbedBridge'
 import {
   FLOW_STEP_IDS,
   POLAR_SYS_HASH,
@@ -13,7 +13,7 @@ export {
   getStageEmbedOrigin,
   POLAR_SYS_HASH,
   STAGE_EMBED_ORIGIN,
-  stageEmbedUrl,
+  STAGE_EMBED_PATHS,
   stageEmbedUrlForStep,
 } from './stageEmbedConfig'
 
@@ -76,13 +76,14 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     if (get().stepIndex === index) return
     set({ stepIndex: index })
     if (typeof window !== 'undefined') {
+      markShellEmbedNavigation()
       const hash = POLAR_SYS_HASH[id]
       if (window.location.hash !== hash) {
         const url = new URL(window.location.href)
         url.hash = hash
         window.history.replaceState(null, '', url)
       }
-      postStageEmbedStep(Number(id)) // no-op until slot deploy listens; src hash is primary
+      postStageEmbedStep(Number(id))
     }
   },
   syncStepFromEmbed: (id) => {
