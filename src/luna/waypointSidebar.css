@@ -482,6 +482,18 @@
   color: var(--sidebar-text);
 }
 
+.sidebar-step-copy__callout {
+  margin: 1rem 0 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: var(--sidebar-text-muted);
+}
+
+.sidebar-step-copy__callout strong {
+  font-weight: 600;
+  color: var(--sidebar-text);
+}
+
 .wp-sidebar__actions {
   display: flex;
   flex-direction: row;

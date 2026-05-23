@@ -509,6 +509,16 @@
   color: #000;
 }
 
+.luna-space-left .sidebar-step-copy__callout {
+  margin: 0.75rem 0 0;
+  color: #2b2b2b;
+}
+
+.luna-space-left .sidebar-step-copy__callout strong {
+  font-weight: 600;
+  color: #000;
+}
+
 .luna-space-right {
   flex: 10 10 var(--sidebar-collapsed); /* 6.125rem = 98px @ 16px/rem */
   width: var(--sidebar-collapsed);

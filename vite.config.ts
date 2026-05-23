@@ -1,9 +1,24 @@
+import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const STEP_IMAGE_FILES = ['Step One.png', 'Step two.png', 'Step 3.png'] as const
+
+function stepImgCacheKeyFromFiles(): string {
+  const dir = path.resolve(__dirname, 'public/step_imgs')
+  try {
+    return STEP_IMAGE_FILES.map((file) => {
+      const stat = fs.statSync(path.join(dir, file))
+      return `${file}:${Math.floor(stat.mtimeMs)}`
+    }).join('|')
+  } catch {
+    return ''
+  }
+}
 
 const reactRoot = path.resolve(__dirname, 'node_modules/react')
 const reactDomRoot = path.resolve(__dirname, 'node_modules/react-dom')
@@ -13,7 +28,7 @@ const waypointSidebarRoot = path.resolve(__dirname, 'node_modules/waypoint-sideb
 const stepImgCacheKey =
   process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) ||
   process.env.VERCEL_DEPLOYMENT_ID?.slice(0, 12) ||
-  ''
+  stepImgCacheKeyFromFiles()
 
 export default defineConfig({
   define: {

@@ -23,6 +23,7 @@ export type FlowSidebarItem = {
   heroImageUrl?: string
 }
 
+/** Filenames in `public/step_imgs/` (hero + preview thumb per step). */
 const STEP_IMAGE_FILES: Record<1 | 2 | 3, string> = {
   1: 'Step One.png',
   2: 'Step two.png',

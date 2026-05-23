@@ -15,12 +15,22 @@ export function SidebarStepCopy({
 }: SidebarStepCopyProps) {
   return (
     <div className={className ?? 'sidebar-step-copy'}>
-      {blocks.map((block, index) =>
-        block.kind === 'paragraph' ? (
-          <p key={index} className={paragraphClassName}>
-            {block.text}
-          </p>
-        ) : (
+      {blocks.map((block, index) => {
+        if (block.kind === 'paragraph') {
+          return (
+            <p key={index} className={paragraphClassName}>
+              {block.text}
+            </p>
+          )
+        }
+        if (block.kind === 'callout') {
+          return (
+            <p key={index} className="sidebar-step-copy__callout">
+              <strong>{block.text}</strong>
+            </p>
+          )
+        }
+        return (
           <ul key={index} className={listClassName}>
             {block.items.map((item) => (
               <li key={item.label}>
@@ -28,8 +38,8 @@ export function SidebarStepCopy({
               </li>
             ))}
           </ul>
-        ),
-      )}
+        )
+      })}
     </div>
   )
 }

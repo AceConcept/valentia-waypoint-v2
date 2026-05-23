@@ -16,6 +16,7 @@ export type StepCopyBullet = {
 export type StepCopyBlock =
   | { kind: 'paragraph'; text: string }
   | { kind: 'bullets'; items: readonly StepCopyBullet[] }
+  | { kind: 'callout'; text: string }
 
 export const STEP_COPY_BLOCKS: readonly (readonly StepCopyBlock[])[] = [
   [
@@ -59,6 +60,10 @@ export const STEP_COPY_BLOCKS: readonly (readonly StepCopyBlock[])[] = [
         },
       ],
     },
+    {
+      kind: 'callout',
+      text: '* Click View Strategy in one of the cards to advance to [ step 3 analysis view ]',
+    },
   ],
   [
     {
@@ -84,7 +89,7 @@ export const STEP_COPY_BLOCKS: readonly (readonly StepCopyBlock[])[] = [
 export function stepCopyToPlain(blocks: readonly StepCopyBlock[]): string {
   return blocks
     .map((block) => {
-      if (block.kind === 'paragraph') return block.text
+      if (block.kind === 'paragraph' || block.kind === 'callout') return block.text
       return block.items.map((item) => `${item.label}: ${item.text}`).join('\n\n')
     })
     .join('\n\n')
