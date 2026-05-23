@@ -5,22 +5,19 @@ type StageEmbedFrameProps = {
   src: string
   title: string
   className?: string
-  /** Remount iframe when the shell step changes (avoids / vs /?query src fights). */
-  stepKey: string
 }
 
-/** iframe points at Valentia; one load per step via `stepKey`. */
-export function StageEmbedFrame({ src, title, className, stepKey }: StageEmbedFrameProps) {
+/** iframe points at Valentia; `src` is set once — step changes go through postMessage. */
+export function StageEmbedFrame({ src, title, className }: StageEmbedFrameProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
     registerStageEmbedFrame(iframeRef.current)
     return () => registerStageEmbedFrame(null)
-  }, [stepKey])
+  }, [])
 
   return (
     <iframe
-      key={stepKey}
       ref={iframeRef}
       className={className}
       src={src}

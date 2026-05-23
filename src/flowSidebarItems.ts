@@ -1,5 +1,10 @@
 import { FLOW_STEPS, type FlowStepId } from './store/flowStore'
-import { STEP_DESCRIPTIONS, STEP_TITLES } from './stepDescriptions'
+import {
+  STEP_COPY_BLOCKS,
+  STEP_DESCRIPTIONS,
+  STEP_TITLES,
+  type StepCopyBlock,
+} from './stepDescriptions'
 
 /**
  * Luna drawer + preview rail — titles, descriptions, optional **thumbUrl** / **heroImageUrl** (`public/` paths).
@@ -10,6 +15,7 @@ export type FlowSidebarItem = {
   step: string
   title: string
   description: string
+  descriptionBlocks: readonly StepCopyBlock[]
   /** Preview list line under step label; defaults to `description` when omitted. */
   previewDescription?: string
   swatch: string
@@ -17,8 +23,14 @@ export type FlowSidebarItem = {
   heroImageUrl?: string
 }
 
+const STEP_IMAGE_FILES: Record<1 | 2 | 3, string> = {
+  1: 'Step One.png',
+  2: 'Step two.png',
+  3: 'Step 3.png',
+}
+
 function stepImagePath(n: 1 | 2 | 3): string {
-  const base = `/step_imgs/${encodeURIComponent(`Step ${n}.png`)}`
+  const base = `/step_imgs/${encodeURIComponent(STEP_IMAGE_FILES[n])}`
   const v = typeof __STEP_IMG_VER__ !== 'undefined' && __STEP_IMG_VER__
     ? __STEP_IMG_VER__
     : ''
@@ -40,6 +52,7 @@ export const FLOW_SIDEBAR_ITEMS: FlowSidebarItem[] = FLOW_STEPS.map((step, i) =>
     step: STEP_TITLES[i] ?? STEP_TITLES[0],
     title: STEP_TITLES[i] ?? STEP_TITLES[0],
     description: STEP_DESCRIPTIONS[i] ?? STEP_DESCRIPTIONS[0],
+    descriptionBlocks: STEP_COPY_BLOCKS[i] ?? STEP_COPY_BLOCKS[0],
     previewDescription: '-',
     swatch: SWATCHES[i] ?? SWATCHES[0],
     thumbUrl: imageUrl,

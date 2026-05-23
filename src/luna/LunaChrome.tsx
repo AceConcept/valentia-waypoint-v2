@@ -8,7 +8,9 @@ import {
   type ReactNode,
 } from 'react'
 import { LunaCanvasScaleContext } from 'waypoint-sidebar/src/luna-sidebar/index.js'
-import { stageEmbedUrlForStep, useFlowStep } from '../store/flowStore'
+import { STEP_COPY_BLOCKS } from '../stepDescriptions'
+import { useFlowStep, useLiveStageEmbedSrc } from '../store/flowStore'
+import { SidebarStepCopy } from './SidebarStepCopy'
 import {
   getCanvasContainScale,
   SIDEBAR_COLLAPSED_REM,
@@ -51,8 +53,8 @@ export function LunaChrome({
   const [fullscreenOpen, setFullscreenOpen] = useState(false)
   const [stageEmbedVisible, setStageEmbedVisible] = useState(true)
   const [fullscreenEmbedMounted, setFullscreenEmbedMounted] = useState(false)
-  const { step } = useFlowStep()
-  const fullscreenEmbedSrc = stageEmbedUrlForStep(step.id)
+  const { step, stepIndex } = useFlowStep()
+  const fullscreenEmbedSrc = useLiveStageEmbedSrc()
 
   const openFullscreen = useCallback(() => {
     setFullscreenOpen(true)
@@ -181,7 +183,14 @@ export function LunaChrome({
                     <h2 className="content-story-title">{step.title}</h2>
                   </div>
                   <div className="description">
-                    <p className="description-text">{step.body}</p>
+                    <SidebarStepCopy
+                      blocks={
+                        STEP_COPY_BLOCKS[stepIndex] ?? STEP_COPY_BLOCKS[0]
+                      }
+                      className="sidebar-step-copy description-text"
+                      paragraphClassName="sidebar-step-copy__paragraph description-text"
+                      listClassName="sidebar-step-copy__list"
+                    />
                   </div>
                   </motion.div>
                 </AnimatePresence>
@@ -252,7 +261,6 @@ export function LunaChrome({
                   >
                     <StageEmbedFrame
                       className="luna-fullscreen-overlay__embed"
-                      stepKey={step.id}
                       src={fullscreenEmbedSrc}
                       title="Full screen steps"
                     />

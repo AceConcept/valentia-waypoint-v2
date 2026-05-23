@@ -7,9 +7,8 @@ import {
 } from '../luna/LunaStageEmbedContext'
 import {
   polarFlowIdFromHash,
-  stageEmbedUrlForStep,
-  useFlowStep,
   useFlowStore,
+  useInitialStageEmbedSrc,
 } from '../store/flowStore'
 
 const embedTransition = {
@@ -19,9 +18,8 @@ const embedTransition = {
 
 export default function WaypointStepsScreen() {
   const hostRef = useRef<HTMLDivElement>(null)
-  const { step } = useFlowStep()
   const { stageEmbedVisible } = useLunaStageEmbed()
-  const embedSrc = stageEmbedUrlForStep(step.id)
+  const embedSrc = useInitialStageEmbedSrc()
 
   useEffect(() => {
     const onHashChange = () => {
@@ -46,7 +44,6 @@ export default function WaypointStepsScreen() {
             >
               <StageEmbedFrame
                 className="stepscreen-embed"
-                stepKey={step.id}
                 src={embedSrc}
                 title="Atencium steps"
               />

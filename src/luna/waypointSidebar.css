@@ -455,6 +455,33 @@
   overflow-wrap: break-word;
 }
 
+.sidebar-step-copy__paragraph {
+  margin: 0;
+}
+
+.sidebar-step-copy__paragraph + .wp-sidebar__description-list,
+.sidebar-step-copy__list {
+  margin: 0.75rem 0 0;
+  padding-left: 1.5rem;
+  list-style: disc;
+}
+
+.sidebar-step-copy__list li,
+.wp-sidebar__description-list li {
+  margin: 0.5rem 0 0;
+}
+
+.sidebar-step-copy__list li:first-child,
+.wp-sidebar__description-list li:first-child {
+  margin-top: 0;
+}
+
+.sidebar-step-copy__list strong,
+.wp-sidebar__description-list strong {
+  font-weight: 500;
+  color: var(--sidebar-text);
+}
+
 .wp-sidebar__actions {
   display: flex;
   flex-direction: row;

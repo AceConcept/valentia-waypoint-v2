@@ -490,6 +490,25 @@
   overflow-wrap: break-word;
 }
 
+.luna-space-left .sidebar-step-copy__list {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.luna-space-left .sidebar-step-copy__list li {
+  margin: 0.5rem 0 0;
+}
+
+.luna-space-left .sidebar-step-copy__list li:first-child {
+  margin-top: 0;
+}
+
+.luna-space-left .sidebar-step-copy__list strong {
+  font-weight: 500;
+  color: #000;
+}
+
 .luna-space-right {
   flex: 10 10 var(--sidebar-collapsed); /* 6.125rem = 98px @ 16px/rem */
   width: var(--sidebar-collapsed);

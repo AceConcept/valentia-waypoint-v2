@@ -10,7 +10,7 @@ export const POLAR_SYS_HASH: Record<FlowStepId, string> = {
   '3': '#3',
 }
 
-/** iframe path per step (appended to embed origin). */
+/** iframe path per step (appended to embed origin). Step 1 = home with charts reset (no query). */
 export const STAGE_EMBED_PATHS: Record<FlowStepId, string> = {
   '1': '/',
   '2': '/?chart=BTCUSDT&compare=SOLUSDT',
@@ -26,8 +26,11 @@ export function getStageEmbedOrigin(): string {
   return STAGE_EMBED_ORIGIN
 }
 
-export function stageEmbedUrlForStep(id: FlowStepId): string {
+export function stageEmbedUrlForStep(
+  id: FlowStepId,
+  pathOverride?: string | null,
+): string {
   const base = getStageEmbedOrigin().replace(/\/$/, '')
-  const path = STAGE_EMBED_PATHS[id]
-  return `${base}${path}`
+  const path = pathOverride?.trim() ? pathOverride.trim() : STAGE_EMBED_PATHS[id]
+  return `${base}${path.startsWith('/') ? path : `/${path}`}`
 }

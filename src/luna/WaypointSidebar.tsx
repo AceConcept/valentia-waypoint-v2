@@ -6,6 +6,7 @@ import {
   type CSSProperties,
 } from 'react'
 import type { FlowSidebarItem } from '../flowSidebarItems'
+import { SidebarStepCopy } from './SidebarStepCopy'
 import './waypointSidebar.css'
 
 const DEFAULT_DRAWER_BG = '/bg-img/bg-img3.jpg'
@@ -150,9 +151,12 @@ export function WaypointSidebar({
                     </div>
                     <div className="wp-sidebar__copy">
                       <h2 className="wp-sidebar__title">{activeItem.title}</h2>
-                      <p className="wp-sidebar__description">
-                        {activeItem.description}
-                      </p>
+                      <SidebarStepCopy
+                        blocks={activeItem.descriptionBlocks}
+                        className="wp-sidebar__description sidebar-step-copy"
+                        paragraphClassName="wp-sidebar__description sidebar-step-copy__paragraph"
+                        listClassName="sidebar-step-copy__list wp-sidebar__description-list"
+                      />
                       {isInfoLink || onInfo ? (
                         <div className="wp-sidebar__actions">
                           {isInfoLink ? (
