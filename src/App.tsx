@@ -1,6 +1,8 @@
 import { LunaChrome } from './luna/LunaChrome'
+import { LoadingScreen } from './luna/LoadingScreen'
+import { getLoadscreenPreview } from './luna/loadscreenPreview'
 import WaypointStepsScreen from './steps/WaypointStepsScreen'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   FLOW_STEP_IDS,
   useFlowStep,
@@ -18,6 +20,31 @@ import './App.css'
 function App() {
   const { stepIndex } = useFlowStep()
   const syncStepFromEmbed = useFlowStore((s) => s.syncStepFromEmbed)
+  const [loadscreenDone, setLoadscreenDone] = useState(false)
+  const [loadKey, setLoadKey] = useState(() => Date.now())
+  const loadscreenPreview = useMemo(() => getLoadscreenPreview(), [])
+  const showLoadscreen = loadscreenPreview.hold || !loadscreenDone
+  const handleLoadscreenComplete = useCallback(() => setLoadscreenDone(true), [])
+
+  useEffect(() => {
+    const nav = performance.getEntriesByType('navigation')[0] as
+      | PerformanceNavigationTiming
+      | undefined
+    if (nav?.type === 'reload') {
+      setLoadscreenDone(false)
+      setLoadKey(Date.now())
+    }
+  }, [])
+
+  useEffect(() => {
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (!event.persisted) return
+      setLoadscreenDone(false)
+      setLoadKey(Date.now())
+    }
+    window.addEventListener('pageshow', onPageShow)
+    return () => window.removeEventListener('pageshow', onPageShow)
+  }, [])
 
   useEffect(() => {
     const embedOrigin = getStageEmbedOrigin()
@@ -48,9 +75,23 @@ function App() {
   }
 
   return (
-    <LunaChrome footerBackgroundUrl="/news_bg.jpg">
-      <WaypointStepsScreen />
-    </LunaChrome>
+    <>
+      <div className="app-shell">
+        <LunaChrome footerBackgroundUrl="/news_bg.jpg">
+          <WaypointStepsScreen />
+        </LunaChrome>
+      </div>
+      {showLoadscreen ? (
+        <LoadingScreen
+          key={loadKey}
+          hold={loadscreenPreview.hold}
+          progress={
+            loadscreenPreview.hold ? loadscreenPreview.progress : undefined
+          }
+          onComplete={handleLoadscreenComplete}
+        />
+      ) : null}
+    </>
   )
 }
 
