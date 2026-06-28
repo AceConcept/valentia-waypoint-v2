@@ -42,6 +42,8 @@ const SWEEP_MS_MAX = 650
 const SWEEP_MS_PER_PX = 0.35
 const HOLD_MS = 250
 const FADE_MS = 400
+const LOADSCREEN_BG_URL = '/loadingscrn/ldingBG.png'
+const BG_LOAD_TIMEOUT_MS = 5000
 
 function sweepMsForViewport() {
   if (typeof window === 'undefined') return 500
@@ -62,6 +64,7 @@ export function LoadingScreen({  hold = false,
   onComplete,
 }: LoadingScreenProps) {
   const [simProgress, setSimProgress] = useState(0)
+  const [bgReady, setBgReady] = useState(hold)
   const shutterRef = useRef<HTMLDivElement>(null)
   const onCompleteRef = useRef(onComplete)
   const finishedRef = useRef(false)
@@ -91,7 +94,34 @@ export function LoadingScreen({  hold = false,
   }, [hold])
 
   useEffect(() => {
-    if (hold) return
+    if (hold) {
+      setBgReady(true)
+      return
+    }
+
+    let cancelled = false
+    const img = new Image()
+    const finish = () => {
+      if (!cancelled) setBgReady(true)
+    }
+
+    img.onload = finish
+    img.onerror = finish
+    img.src = LOADSCREEN_BG_URL
+    if (img.complete) finish()
+
+    const timeout = window.setTimeout(finish, BG_LOAD_TIMEOUT_MS)
+
+    return () => {
+      cancelled = true
+      window.clearTimeout(timeout)
+      img.onload = null
+      img.onerror = null
+    }
+  }, [hold])
+
+  useEffect(() => {
+    if (hold || !bgReady) return
 
     const start = performance.now()
     let frame = 0
@@ -105,10 +135,10 @@ export function LoadingScreen({  hold = false,
 
     frame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frame)
-  }, [hold])
+  }, [hold, bgReady])
 
   useEffect(() => {
-    if (hold) return
+    if (hold || !bgReady) return
 
     const finish = () => {
       if (finishedRef.current) return
@@ -148,12 +178,14 @@ export function LoadingScreen({  hold = false,
       window.clearTimeout(revealTimer)
       window.clearTimeout(fallback)
     }
-  }, [hold, fadeDelayMs, totalMs])
+  }, [hold, bgReady, fadeDelayMs, totalMs])
 
   const shutter = (
     <div
       ref={shutterRef}
-      className={`loadscreen${hold ? '' : ' loadscreen--sequence'}`}
+      className={`loadscreen${
+        bgReady ? ' loadscreen--bg-ready' : ''
+      }${!hold && bgReady ? ' loadscreen--sequence' : ''}`}
       role="progressbar"
       aria-valuenow={progress}
       aria-valuemin={0}
