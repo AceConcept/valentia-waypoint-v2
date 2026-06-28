@@ -3,10 +3,10 @@
   --loadscreen-percent: #000000;
   --loadscreen-yellow: #f5e642;
   --loadscreen-muted: #9a9a9a;
-  --loadscreen-progress-end: 3120ms;
+  --loadscreen-progress-end: 2520ms;
   --loadscreen-sweep-ms: 500ms;
   --loadscreen-fade-ms: 400ms;
-  --loadscreen-fade-delay: 3870ms;
+  --loadscreen-fade-delay: 3270ms;
 
   position: fixed;
   inset: 0;

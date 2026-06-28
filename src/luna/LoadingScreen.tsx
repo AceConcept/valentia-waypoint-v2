@@ -35,7 +35,7 @@ type LoadingScreenProps = {  hold?: boolean
   onComplete?: () => void
 }
 
-const PROGRESS_MS = 3000
+const PROGRESS_MS = 2400
 const PAUSE_MS = 120
 const SWEEP_MS_MIN = 400
 const SWEEP_MS_MAX = 650
