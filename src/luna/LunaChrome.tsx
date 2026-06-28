@@ -164,7 +164,7 @@ export function LunaChrome({ children, footerBackgroundUrl }: LunaChromeProps) {
                     <div className="content-buttons">
                       <a
                         className="content-button content-button--case-study"
-                        href="https://www.atencium-ui.com/design-gallery/valentia"
+                        href="https://atencium-ui.com/#gallery/valentia"
                       >
                         Case study
                       </a>
