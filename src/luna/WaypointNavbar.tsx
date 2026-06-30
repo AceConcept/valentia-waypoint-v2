@@ -16,10 +16,8 @@ const PRIMARY_NAV_STEPS: {
 }[] = [
   { className: 'step-1', label: 'Step One', flowId: FLOW_STEPS[0]?.id ?? '1' },
   { className: 'step-2', label: 'Step Two', flowId: FLOW_STEPS[1]?.id ?? '2' },
+  { className: 'step-3', label: 'Step Three', flowId: FLOW_STEPS[2]?.id ?? '3' },
 ]
-
-/** Steps reached only via Waypoint Manager (highlights manager tab when active). */
-const MANAGER_ONLY_STEPS = new Set<FlowStepId>(['3'])
 
 type StepTabProps = {
   className: string
@@ -52,8 +50,6 @@ export function WaypointNavbar() {
   const goToStepById = useFlowStore((s) => s.goToStepById)
   const [managerOpen, setManagerOpen] = useState(false)
   const managerRef = useRef<HTMLDivElement>(null)
-
-  const managerActive = MANAGER_ONLY_STEPS.has(step.id)
 
   const selectStep = useCallback(
     (id: FlowStepId) => {
@@ -116,9 +112,7 @@ export function WaypointNavbar() {
           >
             <button
               type="button"
-              className={`step-tab step-manager step-tab-dropdown__trigger${
-                managerActive ? ' is-active' : ''
-              }`}
+              className="step-tab step-manager step-tab-dropdown__trigger"
               aria-expanded={managerOpen}
               aria-haspopup="menu"
               onClick={() => setManagerOpen((open) => !open)}

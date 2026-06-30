@@ -18,7 +18,7 @@
   --luna-horizontal-pad-bottom: 10.9375rem; /* 175px */
   --luna-center-slot: 0.7875; /* 2016×1134 center on 2560×1440 canvas */
   --luna-center-w: calc(var(--canvas-w) * var(--luna-center-slot));
-  --luna-navbar-step-w: calc(var(--luna-center-w) / 3);
+  --luna-navbar-step-w: calc(var(--luna-center-w) / 4);
   --luna-content-pad-top: 7rem; /* 112px @ 16px/rem — story column */
 }
 
@@ -126,8 +126,9 @@
 
 .luna-canvas-row > .luna-absolute-pad .navbar-steps > .step-tab,
 .luna-canvas-row > .luna-absolute-pad .navbar-steps > .step-tab-dropdown {
-  flex: 0 0 var(--luna-navbar-step-w);
+  flex: 1 1 0;
   width: var(--luna-navbar-step-w);
+  min-width: 0;
   height: 100%;
   box-sizing: border-box;
 }
@@ -241,7 +242,7 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 0 5rem 0 0;
+  padding: 0 1rem 0 0;
   border: 0;
   border-left: 0;
   background: transparent;
@@ -327,7 +328,7 @@
   position: absolute;
   top: calc(100% - 1.25rem);
   left: auto;
-  right: 5rem;
+  right: 1rem;
   z-index: 50;
   width: 43.1875rem;
   max-height: calc(var(--canvas-h) - var(--luna-horizontal-pad-top) - 2rem);
